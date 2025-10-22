@@ -1,7 +1,1 @@
-[build]
-builder = "DOCKERFILE"
-dockerfilePath = "Dockerfile"
-dockerBuildContext = "."
 
-[deploy]
-startCommand = ""
