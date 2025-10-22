@@ -1,25 +1,42 @@
 # ========================
 # Etapa 1: Build con Maven
 # ========================
-FROM maven:3.9.3-eclipse-temurin-21 AS build
+FROM maven:3.9.9-eclipse-temurin-21 AS build
+
 WORKDIR /app
 
-# Copia pom.xml y src para generar el .jar
+# Copiamos archivos de Maven Wrapper
+COPY mvnw .
+COPY mvnw.cmd .
+COPY .mvn .mvn
+
+# Copiamos el pom.xml y descargamos dependencias
 COPY pom.xml .
+
+# Damos permisos de ejecución (solo necesario en Linux/Mac)
+RUN chmod +x ./mvnw || true
+
+# Descargamos dependencias
+RUN ./mvnw dependency:go-offline -B
+
+# Copiamos el código fuente
 COPY src ./src
 
-# Construye el proyecto, omitiendo tests para no fallar
-RUN mvn clean package -DskipTests
+# Construimos el JAR (sin tests)
+RUN ./mvnw clean package -DskipTests
 
 # =========================
 # Etapa 2: Ejecutar la app
 # =========================
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:21-jre-jammy
+
 WORKDIR /app
 
-# Copia el .jar generado desde la etapa de build
-COPY --from=build /app/target/backend-0.0.1-SNAPSHOT.jar app.jar
+# Copiamos el JAR generado desde la etapa anterior
+COPY --from=build /app/target/*.jar app.jar
 
-# Exponer puerto y ejecutar
+# Exponemos el puerto del servicio
 EXPOSE 8080
+
+# Ejecutamos la aplicación
 ENTRYPOINT ["java", "-jar", "app.jar"]
