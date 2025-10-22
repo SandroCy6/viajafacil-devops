@@ -1,4 +1,10 @@
+# Ignorar todo por defecto
 *
-!/backend/
+
+# ✅ No ignorar la carpeta backend ni su contenido
+!/backend/**
+!/backend
+
+# ✅ No ignorar estos archivos de configuración
 !railway.toml
 !railway.json
