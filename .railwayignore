@@ -1,2 +1,4 @@
 *
 !/backend/
+!railway.toml
+!railway.json
