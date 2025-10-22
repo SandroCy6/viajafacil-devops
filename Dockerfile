@@ -6,12 +6,12 @@ FROM maven:3.9.9-eclipse-temurin-21 AS build
 WORKDIR /app
 
 # Copiamos archivos de Maven Wrapper
-COPY mvnw .
-COPY mvnw.cmd .
-COPY .mvn .mvn
+COPY backend/mvnw .
+COPY backend/mvnw.cmd .
+COPY backend/.mvn .mvn
 
 # Copiamos el pom.xml y descargamos dependencias
-COPY pom.xml .
+COPY backend/pom.xml .
 
 # Damos permisos de ejecución (solo necesario en Linux/Mac)
 RUN chmod +x ./mvnw || true
@@ -20,7 +20,7 @@ RUN chmod +x ./mvnw || true
 RUN ./mvnw dependency:go-offline -B
 
 # Copiamos el código fuente
-COPY src ./src
+COPY backend/src ./src
 
 # Construimos el JAR (sin tests)
 RUN ./mvnw clean package -DskipTests
