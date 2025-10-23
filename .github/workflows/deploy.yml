@@ -23,12 +23,15 @@ jobs:
       - name: 🔑 Autenticarse en Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway whoami || echo "Autenticado con Railway CLI"
+        run: |
+          echo "🔐 Autenticando en Railway..."
+          railway login --ci
+          railway whoami
 
       # 4️⃣ Construir la imagen Docker de Spring Boot
       - name: 🏗️ Construir imagen Docker
         run: |
-          docker build -t viajafacil-backend -f backend/Dockerfile .
+          docker build -t viajafacil-backend -f Dockerfile .
 
       # 5️⃣ Verificar si se construyó correctamente
       - name: ✅ Verificar imagen
