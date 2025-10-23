@@ -2,7 +2,7 @@ package com.viajafacil.backend.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+//hola :v
 @RestController
 public class HelloController {
 
