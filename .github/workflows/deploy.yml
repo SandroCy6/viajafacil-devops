@@ -1,0 +1,44 @@
+name: 🚀 CI/CD a Railway (Spring Boot + Docker)
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Clonamos el código
+      - name: 🧹 Clonar el repositorio
+        uses: actions/checkout@v4
+
+      # 2️⃣ Instalamos Railway CLI
+      - name: ⚙️ Instalar Railway CLI
+        run: npm install -g @railway/cli
+
+      # 3️⃣ Autenticamos con el token
+      - name: 🔑 Autenticarse en Railway
+        run: railway login --token ${{ secrets.RAILWAY_TOKEN }}
+
+      # 4️⃣ Construir la imagen Docker de Spring Boot
+      - name: 🏗️ Construir imagen Docker
+        run: |
+          docker build -t viajafacil-backend -f backend/Dockerfile .
+
+      # 5️⃣ Verificar si se construyó correctamente
+      - name: ✅ Verificar imagen
+        run: docker images
+
+      # 6️⃣ Desplegar a Railway según la rama
+      - name: 🚀 Desplegar a Railway
+        run: |
+          if [ "${{ github.ref_name }}" == "main" ]; then
+            echo "🟢 Desplegando a PRODUCCIÓN..."
+            railway up --service viajafacil-devops-production
+          else
+            echo "🧪 Desplegando a STAGING..."
+            railway up --service develop-area-production
+          fi
