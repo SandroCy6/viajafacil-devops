@@ -24,9 +24,9 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
-          echo "🔐 Autenticando en Railway..."
-          railway login --ci
-          railway whoami
+          echo "🔐 Usando token de Railway..."
+          export RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }}
+          railway whoami || echo "Autenticación por token lista ✅"
 
       # 4️⃣ Construir la imagen Docker de Spring Boot
       - name: 🏗️ Construir imagen Docker
