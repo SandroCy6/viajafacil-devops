@@ -5,9 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 //hola :v
 @RestController
 public class HelloController {
-
     @GetMapping("/hello")
     public String hello() {
-        return "¡Hola, el backend Spring Boot ESTAMOS EN PROCESO , PERO YA TENEMOS CONEXION A LA BSE DE DATOS! ";
+        return "¡Hola, el backend Spring Boot ESTAMOS EN PROCESO";
     }
 }
