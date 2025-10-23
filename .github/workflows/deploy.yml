@@ -44,4 +44,4 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_PROJECT_TOKEN }}
         run: |
           echo "🚀 Desplegando develop-area a develop-area-production.up.railway.app"
-          railway up --service=${{ secrets.RAILWAY_SERVICE_ID_DEVELOP }} --force
+          railway up --service=${{ secrets.RAILWAY_SERVICE_ID_DEVELOP }} -- --force
