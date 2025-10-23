@@ -41,10 +41,9 @@ jobs:
       - name: 🚀 Desplegar a Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-          GITHUB_REF_NAME: ${{ github.ref_name }}
         run: |
           echo "🔍 Detectando rama: $GITHUB_REF_NAME"
-          if [ "$GITHUB_REF_NAME" == "main" ]; then
+          if [ "${GITHUB_REF_NAME}" == "main" ]; then
             echo "🟢 Desplegando a PRODUCCIÓN..."
             railway up --service viajafacil-devops-production
           else
