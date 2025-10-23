@@ -28,16 +28,20 @@ jobs:
       - name: ✅ Verificar imagen
         run: docker images
 
-      # 5️⃣ Desplegar a Railway según la rama
-      - name: 🚀 Desplegar a Railway
+      # 5️⃣ Desplegar a PRODUCCIÓN (main)
+      - name: 🟢 Desplegar a PRODUCCIÓN
+        if: github.ref_name == 'main'
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_PROJECT_TOKEN }}
         run: |
-          echo "🔍 Detectando rama: $GITHUB_REF_NAME"
-          if [ "${GITHUB_REF_NAME}" == "main" ]; then
-            echo "🟢 Desplegando a PRODUCCIÓN..."
-            railway up --service viajafacil-devops-production
-          else
-            echo "🧪 Desplegando a STAGING..."
-            railway up --service develop-area-production
-          fi
+          echo "🚀 Desplegando main-area a viajafacil-devops-production.up.railway.app"
+          railway up --service=${{ secrets.RAILWAY_SERVICE_ID_MAIN }}
+
+      # 6️⃣ Desplegar a STAGING (develop)
+      - name: 🧪 Desplegar a STAGING
+        if: github.ref_name == 'develop'
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_PROJECT_TOKEN }}
+        run: |
+          echo "🚀 Desplegando develop-area a develop-area-production.up.railway.app"
+          railway up --service=${{ secrets.RAILWAY_SERVICE_ID_DEVELOP }}
