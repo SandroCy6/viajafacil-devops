@@ -22,10 +22,10 @@ jobs:
       # 3️⃣ Autenticamos con el token
       - name: 🔑 Autenticarse en Railway
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_PROJECT_TOKEN: ${{ secrets.RAILWAY_PROJECT_TOKEN }}
         run: |
           echo "🔐 Usando token de Railway..."
-          export RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }}
+          export RAILWAY_PROJECT_TOKEN= ${{ secrets.RAILWAY_PROJECT_TOKEN }}
           railway whoami || echo "Autenticación por token lista ✅"
 
       # 4️⃣ Construir la imagen Docker de Spring Boot
@@ -40,7 +40,7 @@ jobs:
       # 6️⃣ Desplegar a Railway según la rama
       - name: 🚀 Desplegar a Railway
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_PROJECT_TOKEN: ${{ secrets.RAILWAY_PROJECT_TOKEN }}
         run: |
           echo "🔍 Detectando rama: $GITHUB_REF_NAME"
           if [ "${GITHUB_REF_NAME}" == "main" ]; then
