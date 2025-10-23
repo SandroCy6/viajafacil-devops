@@ -19,26 +19,19 @@ jobs:
       - name: ⚙️ Instalar Railway CLI
         run: npm install -g @railway/cli
 
-      # 3️⃣ Autenticamos con el token
-      - name: 🔑 Login en Railway
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: |
-          railway login --ci
-          railway whoami
-
-
-      # 4️⃣ Construir la imagen Docker de Spring Boot
+      # 3️⃣ Construir la imagen Docker de Spring Boot
       - name: 🏗️ Construir imagen Docker
         run: |
           docker build -t viajafacil-backend -f Dockerfile .
 
-      # 5️⃣ Verificar si se construyó correctamente
+      # 4️⃣ Verificar si se construyó correctamente
       - name: ✅ Verificar imagen
         run: docker images
 
-      # 6️⃣ Desplegar a Railway según la rama
+      # 5️⃣ Desplegar a Railway según la rama
       - name: 🚀 Desplegar a Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_PROJECT_TOKEN }}
         run: |
           echo "🔍 Detectando rama: $GITHUB_REF_NAME"
           if [ "${GITHUB_REF_NAME}" == "main" ]; then
@@ -48,4 +41,3 @@ jobs:
             echo "🧪 Desplegando a STAGING..."
             railway up --service develop-area-production
           fi
-
