@@ -4,12 +4,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-//abc
+
 @Configuration
+//Indica que esta clase contiene configuraciones de Spring (se cargará al iniciar la app).
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // Crea la configuración de seguridad principal
         http
                 .csrf(csrf -> csrf.disable()) // Desactiva CSRF (útil en APIs)
                 .authorizeHttpRequests(auth -> auth

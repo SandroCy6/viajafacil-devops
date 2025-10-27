@@ -3,7 +3,9 @@ package com.viajafacil.backend.model;
 import jakarta.persistence.*;
 
 @Entity
+// Indica que esta clase representa una tabla en la base de datos
 @Table(name = "usuario")
+// Asocia esta entidad con la tabla "usuario"
 public class Usuario {
 
     @Id

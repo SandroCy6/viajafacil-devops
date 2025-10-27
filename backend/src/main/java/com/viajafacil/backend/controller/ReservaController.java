@@ -6,7 +6,6 @@ import com.viajafacil.backend.model.Paquete;
 import com.viajafacil.backend.repository.ReservaRepository;
 import com.viajafacil.backend.repository.UsuarioRepository;
 import com.viajafacil.backend.repository.PaqueteRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
