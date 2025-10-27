@@ -3,15 +3,20 @@ package com.viajafacil.backend.controller;
 import com.viajafacil.backend.model.Usuario;
 import com.viajafacil.backend.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+// Permite inyectar dependencias automáticamente (como el repositorio)
 import org.springframework.web.bind.annotation.*;
+// Habilita las anotaciones para crear endpoints REST (Get, Post
 
 import java.util.HashMap;
 import java.util.Map;
+// Estructuras para crear respuestas en formato clave-valor
 import java.util.Optional;
 
 @RestController
+// Indica que esta clase atiende peticiones REST y devuelve JSON
 @RequestMapping("/login")
 @CrossOrigin(origins = "*")
+// Permite conexiones desde cualquier origen es decir solo /login
 public class LoginController {
 
     @Autowired
@@ -45,9 +50,13 @@ public class LoginController {
     }
 
     @PostMapping
+    // Endpoint para procesar el inicio de sesión
     public Map<String, Object> login(@RequestBody LoginRequest loginRequest) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findByCorreo(loginRequest.getCorreo());
+        // Busca el usuario por su correo
+
         Map<String, Object> response = new HashMap<>();
+        // Crea un mapa para enviar la respuesta al frontend
 
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();
@@ -66,6 +75,7 @@ public class LoginController {
         }
 
         return response;
+        // Devuelve el resultado al frontend en formato JSON
     }
 }
 
